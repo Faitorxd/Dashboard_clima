@@ -12,7 +12,7 @@ import SmallDemandChart from './components/SmallDemandChart';
 import './dashboard.css';
 import { usePlantDataFromAPI } from "./hooks/usePlantDataFromAPI";
 import StatCard from './components/StatCard';
-import { formatNumber } from './utils/format';
+import { formatNumber, exportAlertsToCSV, exportPlantDataToCSV } from './utils/format';
 
 export default function Dashboard() {
   const { plantData, loading } = usePlantDataFromAPI();
@@ -274,21 +274,52 @@ export default function Dashboard() {
             <div className="bg-gradient-to-br from-red-900/50 to-orange-900/50 rounded-3xl shadow-2xl border border-red-500/30 overflow-hidden backdrop-blur-sm mt-0">
               <div className="bg-gradient-to-r from-red-800/80 to-orange-800/80 px-8 py-6 border-b border-red-500/30" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <h2 className="alert-title-main">Alertas recientes</h2>
-                <button
-                  onClick={() => setShowHistory(true)}
-                  style={{
-                    background: '#fff',
-                    color: '#7c3aed',
-                    border: '1.5px solid #a78bfa',
-                    borderRadius: 12,
-                    padding: '8px 18px',
-                    fontWeight: 600,
-                    marginBottom: 0,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Ver historial de alertas
-                </button>
+                <div style={{display: 'flex', gap: 10}}>
+                  <button
+                    onClick={() => setShowHistory(true)}
+                    style={{
+                      background: '#fff',
+                      color: '#7c3aed',
+                      border: '1.5px solid #a78bfa',
+                      borderRadius: 12,
+                      padding: '8px 18px',
+                      fontWeight: 600,
+                      marginRight: 8,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Ver historial de alertas
+                  </button>
+                  <button
+                    onClick={() => exportPlantDataToCSV(plantData)}
+                    style={{
+                      background: '#2563eb',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 12,
+                      padding: '8px 18px',
+                      fontWeight: 600,
+                      marginRight: 8,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Descargar datos actuales
+                  </button>
+                  <button
+                    onClick={() => exportAlertsToCSV(alertHistory)}
+                    style={{
+                      background: '#059669',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 12,
+                      padding: '8px 18px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Descargar historial CSV
+                  </button>
+                </div>
               </div>
               <div className="p-8">
                 <ul style={{color: '#222', fontSize: 16}}>
